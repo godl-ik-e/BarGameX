@@ -69,6 +69,10 @@ functions:
     handler: bin/save_bar
     events: 
       - http: POST bars
+  read_bar:
+    handler: bin/read_bar
+    events:
+      - http: GET bar
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
