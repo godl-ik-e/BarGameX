@@ -31,11 +31,12 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+                 arn:aws:dynamodb:us-east-1:798931766723:table/Bars
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
-      
+
 # you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+stage: dev
+region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
