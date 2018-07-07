@@ -5,11 +5,14 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+
+	"github.com/godl-ik-e/BarGameX/bar"
 )
 
 var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-east-1"))
 
-func getBar(name string) (*Bar, error) {
+func getBar(name string) (*bar.Bar, error) {
+
 	input := &dynamodb.GetItemInput{
 		TableName: aws.String("aws-go-dep-dev"),
 		Key: map[string]*dynamodb.AttributeValue{
@@ -20,6 +23,7 @@ func getBar(name string) (*Bar, error) {
 	}
 
 	result, err := db.GetItem(input)
+
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +31,7 @@ func getBar(name string) (*Bar, error) {
 		return nil, nil
 	}
 
-	bar := new(Bar)
+	bar := new(bar.Bar)
 	err = dynamodbattribute.UnmarshalMap(result.Item, bar)
 	if err != nil {
 		return nil, err

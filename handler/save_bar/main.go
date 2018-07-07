@@ -7,24 +7,22 @@ import (
 	"encoding/json"
 	"log"
 
+	"github.com/godl-ik-e/BarGameX/bar"
+	"github.com/godl-ik-e/BarGameX/util"
+
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-type Bar struct {
-	Name                     string `json:"Barname"`
-	NumberOfFemaleWaitresses int    `json:"Number of female Waitresses"`
-}
-
 type Response struct {
-	Message string `json:"message"`
+	Message string
 }
 
 func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	log.Printf("Request: %v", req)
 
-	bar := new(Bar)
+	bar := new(bar.Bar)
 
 	err := json.Unmarshal([]byte(req.Body), bar)
 
@@ -40,10 +38,8 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 	returnString, _ := json.Marshal(Response{Message: fmt.Sprintf("Your bar name is %s and has %d female Waitresses!", bar.Name, bar.NumberOfFemaleWaitresses)})
 
-	return events.APIGatewayProxyResponse{
-		StatusCode: http.StatusOK,
-		Body:       string(returnString),
-	}, nil
+	return util.ResponseToGateway(http.StatusOK, string(returnString))
+
 }
 
 func main() {

@@ -10,20 +10,23 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-type Bar struct {
-	Name                     string `json:"Barname"`
-	NumberOfFemaleWaitresses int    `json:"Number of female Waitresses"`
-}
-
 type Response struct {
-	Message string `json:"message"`
+	Message string
 }
 
 func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	log.Printf("Request: %v", req)
 
-	bar, _ := getBar("Sugar Ray")
+	bar, err := getBar("Sugar Ray")
+
+	if err != nil {
+		log.Println(err)
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusNotFound,
+			Body:       "Keine Daten gefunden",
+		}, nil
+	}
 
 	returnString, _ := json.Marshal(bar)
 
