@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/godl-ik-e/BarGameX/util"
 )
 
 type Response struct {
@@ -22,10 +23,7 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 	if err != nil {
 		log.Println(err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusNotFound,
-			Body:       "Keine Daten gefunden",
-		}, nil
+		return util.ResponseToGateway(http.StatusNotFound, "Keine Daten gefunden")
 	}
 
 	returnString, _ := json.Marshal(bar)

@@ -28,10 +28,7 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 	if err != nil {
 		log.Printf("Error Body: %v", req.Body)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       req.Body,
-		}, nil
+		return util.ResponseToGateway(http.StatusBadRequest, req.Body)
 	}
 
 	putBar(bar)
