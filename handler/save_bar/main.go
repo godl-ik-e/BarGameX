@@ -8,6 +8,7 @@ import (
 	"log"
 
 	"github.com/godl-ik-e/BarGameX/bar"
+	"github.com/godl-ik-e/BarGameX/db"
 	"github.com/godl-ik-e/BarGameX/util"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -31,7 +32,7 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 		return util.ResponseToGateway(http.StatusBadRequest, req.Body)
 	}
 
-	putBar(bar)
+	db.PutBar(bar)
 
 	returnString, _ := json.Marshal(Response{Message: fmt.Sprintf("Your bar name is %s and has %d female Waitresses!", bar.Name, bar.NumberOfFemaleWaitresses)})
 

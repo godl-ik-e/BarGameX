@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 
 	"github.com/godl-ik-e/BarGameX/bar"
+	"github.com/godl-ik-e/BarGameX/db"
 	"github.com/godl-ik-e/BarGameX/util"
 )
 
@@ -20,7 +21,7 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 	log.Printf("Request: %v", req)
 	var bars []bar.Bar
-	bars, _ = listBars()
+	bars, _ = db.ListBars()
 
 	// Success HTTP response
 	body, _ := json.Marshal(&Response{

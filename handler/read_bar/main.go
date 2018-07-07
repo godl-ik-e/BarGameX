@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/godl-ik-e/BarGameX/db"
 	"github.com/godl-ik-e/BarGameX/util"
 )
 
@@ -19,7 +20,7 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 
 	log.Printf("Request: %v", req)
 
-	bar, err := getBar("Sugar Ray")
+	bar, err := db.GetBar("Sugar Ray")
 
 	if err != nil {
 		log.Println(err)
