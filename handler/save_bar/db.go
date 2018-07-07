@@ -13,7 +13,7 @@ var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-east-1"))
 // Add a book record to DynamoDB.
 func putBar(bar *Bar) error {
 	input := &dynamodb.PutItemInput{
-		TableName: aws.String("Bars"),
+		TableName: aws.String("aws-go-dep-dev"),
 		Item: map[string]*dynamodb.AttributeValue{
 			"Name": {
 				S: aws.String(bar.Name),

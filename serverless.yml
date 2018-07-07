@@ -31,7 +31,6 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-                 arn:aws:dynamodb:us-east-1:798931766723:table/Bars
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 # you can overwrite defaults here
@@ -120,20 +119,21 @@ functions:
 #       Description: "Description for the output"
 #       Value: "Some output value"
 
-Resources:
-  BarsDynamoDbTable:
-    Type: 'AWS::DynamoDB::Table'
-    DeletionPolicy: Retain
-    Properties:
-      AttributeDefinitions:
-        -
-          AttributeName: id
-          AttributeType: S
-      KeySchema:
-        -
-          AttributeName: id
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      TableName: ${self:provider.environment.DYNAMODB_TABLE}
+resources:
+  Resources:
+    BarsDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: Name
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: Name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}

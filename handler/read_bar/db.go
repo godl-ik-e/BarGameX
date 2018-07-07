@@ -11,7 +11,7 @@ var db = dynamodb.New(session.New(), aws.NewConfig().WithRegion("us-east-1"))
 
 func getBar(name string) (*Bar, error) {
 	input := &dynamodb.GetItemInput{
-		TableName: aws.String("Bars"),
+		TableName: aws.String("aws-go-dep-dev"),
 		Key: map[string]*dynamodb.AttributeValue{
 			"Name": {
 				S: aws.String(name),
