@@ -14,19 +14,25 @@ import (
 )
 
 type Response struct {
-	bars []bar.Bar
+	Bars []*bar.Bar
 }
 
 func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	log.Printf("Request: %v", req)
-	var bars []bar.Bar
-	bars, _ = db.ListBars()
+	listOfBars, _ := db.ListBars()
+	log.Println(listOfBars)
 
 	// Success HTTP response
-	body, _ := json.Marshal(&Response{
-		bars: bars,
+	body, err := json.Marshal(&Response{
+		Bars: listOfBars,
 	})
+
+	if err != nil {
+		log.Printf("Error: %", err)
+	}
+
+	log.Printf("Body: %v", string(body))
 	return util.ResponseToGateway(http.StatusOK, string(body))
 }
 

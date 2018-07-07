@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -59,21 +60,27 @@ func GetBar(name string) (*bar.Bar, error) {
 	return bar, nil
 }
 
-func ListBars() ([]bar.Bar, error) {
+func ListBars() ([]*bar.Bar, error) {
 	input := &dynamodb.ScanInput{
 		TableName: aws.String("aws-go-dep-dev"),
 	}
 	result, _ := db.Scan(input)
 
+	log.Println(result.Items)
+
 	// Construct todos from response
-	var bars []bar.Bar
+	var bars []*bar.Bar
+
 	for _, i := range result.Items {
-		bar := bar.Bar{}
+		bar := &bar.Bar{}
 		if err := dynamodbattribute.UnmarshalMap(i, &bar); err != nil {
 			fmt.Println("Failed to unmarshal")
 			fmt.Println(err)
 		}
+		log.Println(bar)
+
 		bars = append(bars, bar)
+		log.Println(bars)
 	}
 
 	return bars, nil
