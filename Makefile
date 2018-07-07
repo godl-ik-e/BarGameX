@@ -1,3 +1,7 @@
-build:
+HANDLER=save_bar read_bar
+build: $(HANDLER)
+
+$(HANDLER):
 	dep ensure
-	env GOOS=linux go build -ldflags="-s -w" -o bin/save_bar handler/save_bar/main.go
+	cd handler/$@; \
+	env GOOS=linux go build -ldflags="-s -w" -o ../../bin/$@

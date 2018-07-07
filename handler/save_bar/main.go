@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"encoding/json"
@@ -35,11 +36,13 @@ func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse,
 		}, nil
 	}
 
-	barString, _ := json.Marshal(bar)
+	putBar(bar)
+
+	returnString, _ := json.Marshal(Response{Message: fmt.Sprintf("Your bar name is %s and has %d female Waitresses!", bar.Name, bar.NumberOfFemaleWaitresses)})
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Body:       string(barString),
+		Body:       string(returnString),
 	}, nil
 }
 
