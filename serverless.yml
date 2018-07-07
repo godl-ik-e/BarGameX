@@ -52,10 +52,10 @@ package:
    - ./bin/**
 
 functions:
-  hello:
-    handler: bin/hello
-  world:
-    handler: bin/world
+  save_bar:
+    handler: bin/save_bar
+    events: 
+      - http: POST bars
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
