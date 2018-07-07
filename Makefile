@@ -1,5 +1,5 @@
-HANDLER=save_bar read_bar
-build: $(HANDLER)
+HANDLER=save_bar read_bar list_bars
+build: init $(HANDLER)
 
 all: init build deploy
 

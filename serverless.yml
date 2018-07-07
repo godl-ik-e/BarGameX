@@ -72,6 +72,11 @@ functions:
     handler: bin/read_bar
     events:
       - http: GET bar
+      - http: POST bars
+  list_bars:
+    handler: bin/list_bars
+    events:
+      - http: GET bars
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
